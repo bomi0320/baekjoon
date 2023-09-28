@@ -5,9 +5,9 @@ for _ in range(9):
   heights.append(int(input()))
 heights.sort()
 
-all_height = sum(heights) # 모든 키를 더한 것
+all_height = sum(heights)  # 모든 키를 더한 것
 
-nums=[i for i in range(9)]
+nums = [i for i in range(9)]
 combi = list(combinations(nums, 2))
 #print(combi)
 
