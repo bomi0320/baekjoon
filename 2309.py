@@ -1,3 +1,5 @@
+#일곱 난쟁이
+
 from itertools import combinations
 
 heights = []
