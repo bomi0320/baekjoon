@@ -1,37 +1,21 @@
 # 문자열 폭발
 
 s = list(input())
-explosion = input()
+explosion = list(input())
 
 l = len(s)  # 문자열의 길이
 explo_l = len(explosion)  # 폭발 문자열의 길이
-explo_last = explosion[-1]  # 폭발 문자열의 마지막 문자
 
 stack = []  # 스택
-j = 0  # 폭발 문자열의 인덱스
-flag = False
 for i in range(l):
-    if s[i] == explo_last:  # 폭발 문자열의 마지막 문자와 같으면
-        flag = True
-        tmp_list = [explo_last]
-        for j in range(explo_l-2, -1, -1):
-            if not stack:  # 폭발 문자열이 아님
-                flag = False
-                break
-            else:
-                tmp = stack.pop()
-                tmp_list.append(tmp)
-                if tmp != explosion[j]:  # 폭발 문자열이 아님
-                    flag = False
-                    break
+    stack.append(s[i])  # 스택에 push
+    stack_l = len(stack)  # 스택의 길이
 
-        if not flag:  # 폭발 문자열이 아니였으면
-            stack.extend(tmp_list[::-1])  # pop 한 문자열들 전부 다시 push
+    if stack[stack_l-explo_l: stack_l] == explosion:  # 폭발 문자열이면
+        for _ in range(explo_l):
+            stack.pop()  # 스택에서 push
 
-    else:
-        stack.append(s[i])
-
-
+# 결과 출력
 if len(stack) == 0:
     print("FRULA")
 else:
