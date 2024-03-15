@@ -7,9 +7,9 @@ t_len, p_len = len(text), len(pattern)
 pi = [0 for _ in range(p_len)]
 j = 0
 for i in range(1, p_len):
-    while (j > 0) and (text[i] != pattern[j]):
+    while (j > 0) and (pattern[i] != pattern[j]):
         j = pi[j-1]
-    if text[i] == pattern[j]:
+    if pattern[i] == pattern[j]:
         j += 1
         pi[i] = j
 
