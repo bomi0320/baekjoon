@@ -1,28 +1,33 @@
 # 연결 요소의 개수
+
 import sys
-sys.setrecursionlimit(100000)
 
-N, M = map(int, input().split())
-matrix = [[] for _ in range(N+1)]
-visited = [False] * (N+1)
-
-
-def DFS(vertex):
-    visited[vertex] = True
-    for a in matrix[vertex]:
-        if not visited[a]:
-            DFS(a)
-
-
-for _ in range(M):
+n, m = map(int, input().split())
+lines = [[] for _ in range(n+1)]
+for _ in range(m):
     u, v = map(int, sys.stdin.readline().split())
-    matrix[u].append(v)
-    matrix[v].append(u)
+    lines[u].append(v)
+    lines[v].append(u)
 
-result = 0
-for i in range(1, N+1):
+stack = []
+visited = [False for _ in range(n+1)]
+
+
+def dfs():
+    while len(stack) != 0:
+        target = stack.pop()
+        for component in lines[target]:
+            if not visited[component]:
+                stack.append(component)
+                visited[component] = True
+
+
+num_of_connected_component = 0
+for i in range(1, n+1):
     if not visited[i]:
-        result += 1
-        DFS(i)
+        stack.append(i)
+        visited[i] = True
+        num_of_connected_component += 1
+        dfs()
 
-print(result)
+print(num_of_connected_component)
