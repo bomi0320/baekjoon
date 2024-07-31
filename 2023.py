@@ -1,29 +1,27 @@
 # 신기한 소수
+
 import sys
-sys.setrecursionlimit(100000)
+sys.setrecursionlimit(10000)
 
 
 def isPrime(num):
-    for i in range(2, num//2+1):
+    for i in range(2, int(num/2 + 1)):
         if num % i == 0:
             return False
     return True
 
 
-def DFS(number):
-    if len(str(number)) == N:
-        print(number)
-    else:
-        for i in range(1, 10):
-            if i % 2 == 0:
-                continue
-            if isPrime(number * 10 + i):
-                DFS(number * 10 + i)
+def dfs(num):
+    if len(str(num)) == n:
+        print(num)
+        return
+    for i in [1, 3, 5, 7, 9]:
+        target = num * 10 + i
+        if isPrime(target):
+            dfs(target)
 
 
-N = int(input())
-DFS(2)
-DFS(3)
-DFS(5)
-DFS(7)
+n = int(input())
 
+for first_num in [2, 3, 5, 7]:
+    dfs(first_num)
