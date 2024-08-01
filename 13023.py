@@ -1,37 +1,38 @@
 # ABCDE
+
 import sys
-sys.setrecursionlimit(100000)
+sys.setrecursionlimit(10000)
 
-N, M = map(int, input().split())
-A = [[] for _ in range(N+1)]
-visited = [False] * (N+1)
-check = False
+n, m = map(int, input().split())
+
+people = [[] for _ in range(n)]
+visited = [False] * n
+flag = False
 
 
-def DFS(v, depth):
-    global check
+def dfs(node, depth):
+    global flag
     if depth == 5:
-        check = True
+        flag = True
         return
-    visited[v] = True
-    for a in A[v]:
-        if not visited[a]:
-            DFS(a, depth+1)
-    visited[v] = False
+    visited[node] = True
+    for j in people[node]:
+        if not visited[j]:
+            dfs(j, depth+1)
+    visited[node] = False
 
 
-for _ in range(M):
-    a, b = map(int, sys.stdin.readline().split())
-    A[a].append(b)
-    A[b].append(a)
+for _ in range(m):
+    u, v = map(int, sys.stdin.readline().split())
+    people[u].append(v)
+    people[v].append(u)
 
-for i in range(N):
-    if check:
+for i in range(n):
+    dfs(i, 1)
+    if flag:
         break
-    else:
-        DFS(i, 1)
 
-if check:
+if flag:
     print(1)
 else:
     print(0)
