@@ -1,42 +1,50 @@
 # DFS와 BFS
 
+import sys
 from collections import deque
 
-
-def dfs(graph, v, visitedj):
-    visited[v] = True
-    print(v, end=" ")
-    for i in graph[v]:
-        if not visited[i]:
-            dfs(graph, i, visited)
-
-
-def bfs(graph, v, visited):
-    queue = deque([v])
-    visited[v] = True
-    while queue:
-        v = queue.popleft()
-        print(v, end=" ")
-        for i in graph[v]:
-            if not visited[i]:
-                queue.append(i)
-                visited[i] = True
-
-
 n, m, v = map(int, input().split())
-graph = [[] for _ in range(n+1)]
+
+stack = []
+queue = deque()
+
+
+def dfs():
+    while len(stack) != 0:
+        target = stack.pop()
+        if not visited[target]:
+            visited[target] = True
+            print(target, end=" ")
+            for component in sorted(A[target], reverse=True):
+                stack.append(component)
+
+
+def bfs():
+    while len(queue) != 0:
+        target = queue.popleft()
+        print(target, end=" ")
+        for component in sorted(A[target]):
+            if not visited[component]:
+                visited[component] = True
+                queue.append(component)
+
+
+A = [[] for _ in range(n+1)]
+
 for _ in range(m):
-    a, b = map(int, input().split())
-    graph[a].append(b)
-    graph[b].append(a)
+    w, u = map(int, sys.stdin.readline().split())
+    A[w].append(u)
+    A[u].append(w)
 
-for i in graph:
-    i.sort()
-
-
+# dfs 실행
 visited = [False] * (n+1)
-dfs(graph, v, visited)
+stack.append(v)
+dfs()
+
 print()
 
+# bfs 실행
 visited = [False] * (n+1)
-bfs(graph, v, visited)
+queue.append(v)
+visited[v] = True
+bfs()
