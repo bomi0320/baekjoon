@@ -1,32 +1,28 @@
 # 미로 탐색
+
 import sys
 from collections import deque
 
-N, M = map(int, input().split())
-A = []
-for _ in range(N):
-    A.append(list(map(int, sys.stdin.readline().strip())))
+n, m = map(int, input().split())
 
-visited = [[False for _ in range(M)] for _ in range(N)]
-dx = [0, 1, 0, -1]
-dy = [1, 0, -1, 0]
+maze = []
+direction_x = [0, 0, 1, -1]
+direction_y = [1, -1, 0, 0]
 
+for _ in range(n):
+    maze.append(list(map(int, list(sys.stdin.readline().rstrip()))))
 
-def BFS(x, y):
-    queue = deque()
-    visited[x][y] = True
-    queue.append((x, y))
-    while queue:
-        now = queue.popleft()
-        for k in range(4):
-            x = now[0] + dx[k]
-            y = now[1] + dy[k]
-            if 0 <= x < N and 0 <= y < M:
-                if A[x][y] != 0 and not visited[x][y]:
-                    visited[x][y] = True
-                    A[x][y] = A[now[0]][now[1]] + 1
-                    queue.append((x, y))
+queue = deque()
+queue.append((0, 0, 1))
 
+while len(queue) != 0:
+    x, y, this_num = queue.popleft()
+    for i in range(4):
+        next_x = x + direction_x[i]
+        next_y = y + direction_y[i]
+        if 0 <= next_x < n and 0 <= next_y < m:
+            if maze[next_x][next_y] == 1:
+                maze[next_x][next_y] = this_num + 1
+                queue.append((next_x, next_y, this_num + 1))
 
-BFS(0, 0)
-print(A[N-1][M-1])
+print(maze[n-1][m-1])
