@@ -1,44 +1,50 @@
 # 트리의 지름
+
 import sys
 from collections import deque
 
-V = int(input())
-A = [[] for _ in range(V+1)]
-for _ in range(V):
-    inf = list(map(int, sys.stdin.readline().split()))
-    vertex = inf[0]
-    for i in range(1, len(inf)+1, 2):
-        if inf[i] == -1:
+n = int(input())
+A = [[] for _ in range(n + 1)]
+
+
+def bfs():
+    farthest = (0, 0)  # node, distance
+    while len(queue) != 0:
+        this_node, this_weight = queue.popleft()
+        visited[this_node] = True
+        if this_weight > farthest[1]:
+            farthest = (this_node, this_weight)
+        for component_node, component_weight in A[this_node]:
+            if not visited[component_node]:
+                queue.append((component_node, component_weight + this_weight))
+    return farthest
+
+
+for _ in range(n):
+    line = list(map(int, sys.stdin.readline().split()))
+    v = line[0]
+    for i in range(1, len(line), 2):
+        u = line[i]
+        if u == -1:
             break
         else:
-            A[inf[0]].append((inf[i], inf[i+1]))
+            weight = line[i+1]
+            A[v].append((u, weight))
 
+queue = deque()
 
-def BFS(v):
-    queue = deque()
-    queue.append(v)
-    visited[v] = True
-    while queue:
-        now = queue.popleft()
-        for q in A[now]:
-            if not visited[q[0]]:
-                queue.append(q[0])
-                visited[q[0]] = True
-                distance[q[0]] = distance[now] + q[1]
+# bfs(1): 1번 노드에서 가장 먼 노드 찾기
+visited = [False] * (n + 1)
+visited[1] = True
+for component in A[1]:
+    queue.append(component)
+farthest_node = bfs()[0]
 
+# bfs(farthest_node)
+visited = [False] * (n + 1)
+visited[farthest_node] = True
+for component in A[farthest_node]:
+    queue.append(component)
+farthest_distance = bfs()[1]
 
-distance = [0]*(V+1)
-visited = [False] * (V+1)
-BFS(1)
-
-# max 값인 노드 찾기
-max_index = 0
-for i in range(1, V+1):
-    if distance[i] > distance[max_index]:
-        max_index = i
-
-distance = [0]*(V+1)
-visited = [False] * (V+1)
-BFS(max_index)
-
-print(max(distance))
+print(farthest_distance)
