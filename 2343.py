@@ -1,32 +1,27 @@
 # 기타 레슨
-N, M = map(int, input().split())
+
+n, m = map(int, input().split())
 A = list(map(int, input().split()))
 
-start = 0
-end = 0
+left, right = max(A), sum(A)
 
-for a in A:
-    if a > start:
-        start = a
-    end += a
 
-while start <= end:
-    middle = (start + end)//2
-    sum = 0
-    cnt = 0
-    for i in range(N):
-        if sum + A[i] > middle:
-            cnt += 1
-            sum = 0
-        sum += A[i]
+def NumOfBlueRay(length):
+    result = 1
+    temp = 0
+    for i in A:
+        temp += i
+        if temp > length:
+            temp = i
+            result += 1
+    return result
 
-    if sum != 0:
-        cnt += 1
 
-    if cnt > M:
-        start = middle + 1
+while left <= right:
+    middle = (left + right) // 2
+    if NumOfBlueRay(middle) <= m:
+        right = middle - 1
     else:
-        end = middle - 1
+        left = middle + 1
 
-print(start)
-
+print(left)
