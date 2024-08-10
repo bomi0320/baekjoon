@@ -1,25 +1,32 @@
 # 나머지 합
 
+from collections import Counter
+import math
+
 n, m = map(int, input().split())
-nums = list(map(int, input().split()))
+A = list(map(int, input().split()))
 
-# 합 배열 만들기
-sums = []
+# 구간 합
+S = [A[0]]
+for i in range(1, n):
+    S.append(S[i-1] + A[i])
+
+# 구간 합의 나머지
+remainder_of_S = []
+result = 0
 for i in range(n):
-    if i == 0:
-        sums.append(nums[0])
-    else:
-        sums.append(sums[i-1] + nums[i])
+    remainder = S[i] % m
+    remainder_of_S.append(remainder)
+    if remainder == 0:  # 0부터 i까지의 합의 나머지가 0인 것
+        result += 1
 
-l_li = [0]*m
-for i in range(n):
-    r = sums[i] % m
-    l_li[r] += 1
+counter = Counter(remainder_of_S)
 
-cnt = l_li[0]
+for key, value in counter.items():
+    nCr = math.comb(value, 2)
+    result += nCr
 
-for i in range(m):
-    if l_li[i] > 1:
-        cnt += l_li[i]*(l_li[i]-1)//2
+print(result)
 
-print(cnt)
+
+
