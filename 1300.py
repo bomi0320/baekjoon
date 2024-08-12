@@ -7,14 +7,15 @@ start, end = 1, k
 result = 0
 
 while start <= end:
-    middle = (start + end) // 2
+    medium = (start + end) // 2
     temp = 0
     for i in range(1, n + 1):
-        temp += min(n, middle//i)
+        temp += min(n, medium//i)
+
     if temp < k:
-        start = middle + 1
+        start = medium + 1
     else:
-        result = middle
-        end = middle - 1
+        end = medium - 1
+        result = medium
 
 print(result)

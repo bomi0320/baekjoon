@@ -2,20 +2,22 @@
 
 n = int(input())
 
-cnt = 1
-start_index = 1
-end_index = 1
-sum = 1
-while end_index != n:
-    if sum < n:
-        end_index += 1
-        sum += end_index
-    elif sum > n:
-        sum -= start_index
-        start_index += 1
-    else:  # sum == n:
-        end_index += 1
-        sum += end_index
-        cnt += 1
+result = 0
+start, end = 1, 1
 
-print(cnt)
+now = 1
+while end <= n:
+    if now < n:
+        end += 1
+        now += end
+    elif now > n:
+        now -= start
+        start += 1
+    else:  # now == target
+        result += 1
+        now -= start
+        start += 1
+        end += 1
+        now += end
+
+print(result)
