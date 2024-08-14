@@ -2,22 +2,22 @@
 
 n = int(input())
 
-result = 0
-start, end = 1, 1
+i, j = 1, 1
+temp = 1
+count = 0
 
-now = 1
-while end <= n:
-    if now < n:
-        end += 1
-        now += end
-    elif now > n:
-        now -= start
-        start += 1
-    else:  # now == target
-        result += 1
-        now -= start
-        start += 1
-        end += 1
-        now += end
+while i <= n and j <= n:
+    if temp < n:
+        j += 1
+        temp += j
+    elif temp == n:
+        count += 1
+        temp -= i
+        i += 1
+        j += 1
+        temp += j
+    else:
+        temp -= i
+        i += 1
 
-print(result)
+print(count)
