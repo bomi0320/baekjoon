@@ -1,28 +1,29 @@
 # 좋다
 
 n = int(input())
-nums = list(map(int, input().split()))
-nums.sort()
+A = list(map(int, input().split()))
 
-cnt = 0
-for c in range(n):
-    check = nums[c]
-    i = 0
-    j = n - 1
-    sum = nums[i] + nums[j]
+A.sort()
+
+count = 0
+
+for t in range(n):
+    target = A[t]
+    i, j = 0, n-1
     while i < j:
-        if sum == check:
-            if i != c and j != c:
-                cnt += 1
+        temp = A[i] + A[j]
+        if temp == target:
+            if i != t and j != t:
+                count += 1
                 break
-            elif i == c:
+            elif i == t:
                 i += 1
-            elif j == c:
+            elif j == t:
                 j -= 1
-        elif sum > check:
-            j -= 1
-        else:
+        elif temp < target:
             i += 1
-        sum = nums[i] + nums[j]
+        else:
+            j -= 1
 
-print(cnt)
+print(count)
+
