@@ -2,48 +2,48 @@
 
 import sys
 
-n = int(input())
-A = [[] for _ in range(n+1)]
+v = int(input())
 
-for _ in range(n):
+A = [[] for _ in range(v+1)]
+for _ in range(v):
     line = list(map(int, sys.stdin.readline().split()))
-    v = line[0]
+    v1 = line[0]
     for i in range(1, len(line), 2):
-        if line[i] == -1:
+        v2 = line[i]
+        if v2 == -1:
             break
-        else:
-            u, w = line[i], line[i+1]
-            A[v].append((u, w))
+        value = line[i+1]
+        A[v1].append((v2, value))
 
 
 def dfs():
     farthest_distance, farthest_node = 0, 0
-    while len(stack):
-        this_node, this_weight = stack.pop()
-        visited[this_node] = True
-        if this_weight > farthest_distance:
-            farthest_distance = this_weight
-            farthest_node = this_node
-        for next_node, next_weight in A[this_node]:
+    while stack:
+        node, weight = stack.pop()
+        if weight > farthest_distance:
+            farthest_distance = weight
+            farthest_node = node
+        visited[node] = True
+        for next_node, next_weight in A[node]:
             if not visited[next_node]:
-                stack.append((next_node, next_weight + this_weight))
+                stack.append((next_node, next_weight + weight))
     return farthest_distance, farthest_node
 
 
 stack = []
 
-# dfs(1)
-visited = [False] * (n + 1)
+# dfs 1
+visited = [False] * (v+1)
+visited[1] = True
 for i in A[1]:
     stack.append(i)
-visited[1] = True
-f_distance, f_node = dfs()
+f_distance1, f_node1 = dfs()
 
-# dfs(f_node)
-visited = [False] * (n + 1)
-for i in A[f_node]:
+# dfs farthest_node
+visited = [False] * (v+1)
+visited[f_node1] = True
+for i in A[f_node1]:
     stack.append(i)
-visited[f_node] = True
-f_distance, f_node = dfs()
+f_distance2, f_node2 = dfs()
 
-print(f_distance)
+print(f_distance2)
