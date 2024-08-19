@@ -1,21 +1,21 @@
 # 나무 자르기
 
 n, m = map(int, input().split())
-trees = list(map(int, input().split()))
+A = list(map(int, input().split()))
 
-start, end = 0, max(trees)
+lo, hi = max(A)-m, max(A)-1
 
-last_total = 0
-while start <= end:
-    middle = (start + end) // 2
-    total = 0
-    for tree in trees:
-        tmp = tree - middle
-        if tmp > 0:
-            total += tmp
-    if total >= m:
-        start = middle + 1
+answer = 0
+while lo <= hi:
+    medium = (lo + hi) // 2
+    temp = 0
+    for a in A:
+        if a > medium:
+            temp += (a - medium)
+    if temp >= m:
+        lo = medium + 1
+        answer = medium
     else:
-        end = middle - 1
+        hi = medium - 1
 
-print(end)
+print(answer)
