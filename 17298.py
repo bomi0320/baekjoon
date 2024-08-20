@@ -3,21 +3,14 @@
 n = int(input())
 A = list(map(int, input().split()))
 
-stack = [0]
-answer = [0]*n
-for i in range(1, n):
-    now = A[i]
-    if now <= A[stack[-1]]:
-        stack.append(i)
-    else:
-        while len(stack) != 0 and now > A[stack[-1]]:
-            index = stack.pop()
-            answer[index] = now
-        stack.append(i)
+answer = [-1 for _ in range(n)]
+stack = [0]  # index 0 append
 
-while len(stack) != 0:
-    index = stack.pop()
-    answer[index] = -1
+for i in range(1, n):
+    nge = A[i]
+    while stack and A[stack[-1]] < nge:
+        answer[stack.pop()] = nge
+    stack.append(i)
 
 for a in answer:
     print(a, end=" ")
