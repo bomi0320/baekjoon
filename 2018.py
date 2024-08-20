@@ -2,11 +2,10 @@
 
 n = int(input())
 
-i, j = 1, 1
-temp = 1
+i, j, temp = 1, 1, 1
 count = 0
 
-while i <= n and j <= n:
+while i <= n:
     if temp < n:
         j += 1
         temp += j
@@ -16,7 +15,7 @@ while i <= n and j <= n:
         i += 1
         j += 1
         temp += j
-    else:
+    else:  # temp > n
         temp -= i
         i += 1
 
