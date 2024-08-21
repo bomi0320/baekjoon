@@ -5,23 +5,23 @@ A = list(map(int, input().split()))
 
 A.sort()
 
-result = 0
-for target_idx in range(n):
-    target = A[target_idx]
-    i, j = 0, n-1
-    while i < j:
-        temp = A[i] + A[j]
+count = 0
+for i in range(n):
+    target = A[i]
+    l, r = 0, n - 1
+    while l < r:
+        temp = A[l] + A[r]
         if temp == target:
-            if i == target_idx:
-                i += 1
-            elif j == target_idx:
-                j -= 1
-            else:
-                result += 1
+            if l != i and r != i:
+                count += 1
                 break
+            elif l == i:
+                l += 1
+            else:
+                r -= 1
         elif temp > target:
-            j -= 1
-        else:  # temp < target
-            i += 1
+            r -= 1
+        else:
+            l += 1
 
-print(result)
+print(count)

@@ -1,37 +1,30 @@
 # 스택 수열
+
 import sys
 
+num = 1
+stack = []
+result = []
+flag = True
 
 n = int(input())
-nums = []
 for _ in range(n):
-    nums.append(int(sys.stdin.readline()))
-
-stack = []
-now = 0
-result = []
-flag = False
-for i in nums:
-    if now < i:
-        for j in range(now, i):
-            now += 1
-            result.append("+")
-            stack.append(now)
-        result.append("-")
+    target = int(sys.stdin.readline())
+    if target >= num:
+        while target >= num:
+            stack.append(num)
+            num += 1
+            result.append('+')
         stack.pop()
-    elif stack[-1] == i:
-        result.append("-")
-        stack.pop()
+        result.append('-')
     else:
-        flag = True
-        break
+        top = stack.pop()
+        if top > target:
+            print("NO")
+            flag = False
+            break
+        result.append('-')
 
 if flag:
-    print("NO")
-else:
     for i in result:
         print(i)
-
-
-
-
